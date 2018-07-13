@@ -28,8 +28,8 @@
 #include <string.h>
 
 const unsigned default_option_flags = bench_0 | bench_1 | bench_2 |
-                                      bench_xxhash | bench_highwayhash |
-                                      bench_tiny | bench_large;
+                                      bench_xxhash; /* | bench_highwayhash | 
+                                      bench_tiny | bench_small | bench_medium | bench_large; */
 
 const unsigned available_eas_flags =
 #if T1HA0_AESNI_AVAILABLE
@@ -282,8 +282,11 @@ int main(int argc, const char *argv[]) {
 #endif /* T1HA0_DISABLED */
 
   failed |= HighwayHash64_verify(HighwayHash64_pure_c, "HighwayHash64_pure_c");
+#if 0
   failed |= HighwayHash64_verify(HighwayHash64_Portable,
                                  "HighwayHash64_portable_cxx");
+#endif
+
 #ifdef __ia32__
   if (ia32_cpu_features.basic.ecx & (1ul << 19))
     HighwayHash64_verify(HighwayHash64_SSE41, "HighwayHash64_sse41");
@@ -438,6 +441,33 @@ int main(int argc, const char *argv[]) {
   bench_size(1, "Non-optimized/Debug");
   printf("\nNon-optimized/Debug build, skip benchmark\n");
 #else
+
+#if 0
+  bench_size(1, "");
+  bench_size(2, "");
+  bench_size(4, "");
+  bench_size(8, "");
+  bench_size(16, "");
+  bench_size(24, "");
+  bench_size(32, "");
+  bench_size(40, "");
+#endif
+  bench_size(48, "");
+
+  bench_size(56, "");
+
+  bench_size(64, "");
+#if 0
+  bench_size(80, "");
+  bench_size(96, "");
+  bench_size(112, "");
+  bench_size(128, "");
+  bench_size(140, "");
+  bench_size(156, "");
+#endif
+
+
+
   if (is_option_set(bench_tiny))
     bench_size(7, "tiny");
   if (is_option_set(bench_small))
